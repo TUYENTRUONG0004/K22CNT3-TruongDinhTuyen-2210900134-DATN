@@ -144,7 +144,7 @@ def api_dochoi_update(ma_do_choi):
 @app.route('/api/dochoi/<int:ma_do_choi>', methods=['DELETE'])
 def api_dochoi_delete(ma_do_choi):
     try:
-        conn = get_connection()
+        conn = get_connection() 
         cur = conn.cursor()
         cur.execute("DELETE FROM DoChoi WHERE MaDoChoi = ?", (ma_do_choi,))
         conn.commit()
