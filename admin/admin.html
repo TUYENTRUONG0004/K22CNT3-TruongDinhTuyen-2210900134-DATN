@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin – TOYWORLD</title>
+    <link rel="stylesheet" href="../admin/css/admin.css">
+</head>
+<body>
+
+<div class="admin-header">
+    ADMIN – TOYWORLD
+</div>
+
+<div class="admin-content">
+
+    <!-- ===== QUẢN LÝ SẢN PHẨM ===== -->
+    <h2>Quản lý sản phẩm</h2>
+
+    <div class="admin-form">
+        <input id="ten" placeholder="Tên đồ chơi">
+        <input id="gia" placeholder="Giá">
+        <input id="anh" placeholder="Ảnh URL">
+        <textarea id="mota" placeholder="Mô tả"></textarea>
+        <button class="admin-btn" onclick="themSanPham()">Thêm sản phẩm</button>
+    </div>
+
+    <table class="admin-table" id="productTable"></table>
+
+    <hr>
+
+    <!-- ===== NGƯỜI DÙNG ===== -->
+    <h2>Danh sách người dùng</h2>
+    <table class="admin-table" id="userTable"></table>
+
+    <hr>
+
+    <!-- ===== ĐƠN HÀNG ===== -->
+    <h2>Lịch sử đơn hàng</h2>
+    <table class="admin-table" id="orderTable"></table>
+
+</div>
+    
+
+<script src="../admin/js/admin.js"></script>
+</body>
+</html>

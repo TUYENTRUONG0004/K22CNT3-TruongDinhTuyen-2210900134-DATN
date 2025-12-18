@@ -1,0 +1,106 @@
+/* ===== ADMIN RESET ===== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+}
+
+/* ===== ADMIN HEADER ===== */
+.admin-header {
+    height: 60px;
+    background-color: #343a40;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ===== ADMIN LAYOUT ===== */
+.admin-container {
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+
+/* ===== SIDEBAR ===== */
+.admin-sidebar {
+    width: 220px;
+    background-color: #212529;
+    padding-top: 20px;
+}
+
+.admin-sidebar a {
+    display: block;
+    padding: 12px 20px;
+    color: #ced4da;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.admin-sidebar a:hover {
+    background-color: #343a40;
+    color: white;
+}
+
+/* ===== MAIN CONTENT ===== */
+.admin-content {
+    flex: 1;
+    padding: 30px;
+}
+
+/* ===== TABLE ===== */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #f1f3f5;
+}
+
+/* ===== FORM ===== */
+.admin-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* ===== BUTTON ===== */
+.admin-btn {
+    background-color: #0d6efd;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.admin-btn.delete {
+    background-color: #dc3545;
+}
+
+.admin-btn:hover {
+    opacity: 0.9;
+}

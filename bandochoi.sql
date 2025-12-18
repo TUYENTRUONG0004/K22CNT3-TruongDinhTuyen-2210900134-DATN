@@ -39,20 +39,7 @@ CREATE TABLE DonHang (
     FOREIGN KEY (MaNguoiMua) REFERENCES NguoiDung(MaNguoiDung),
     FOREIGN KEY (MaDoChoi) REFERENCES DoChoi(MaDoChoi)
 );
-CREATE TABLE YeuCauTraoDoi (
-    MaYeuCau INT PRIMARY KEY IDENTITY(1,1),
-    MaDoChoiDeNghi INT,
-    MaDoChoiMuon INT,
-    MaNguoiDung INT,
-    NgayYeuCau DATETIME DEFAULT GETDATE(),
-    TrangThai NVARCHAR(50),
-    AnhDoNghi NVARCHAR(300),
-    AnhDoMuon NVARCHAR(300),
 
-    FOREIGN KEY (MaDoChoiDeNghi) REFERENCES DoChoi(MaDoChoi),
-    FOREIGN KEY (MaDoChoiMuon) REFERENCES DoChoi(MaDoChoi),
-    FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
-);
 INSERT INTO NguoiDung (TenNguoiDung, Email, VaiTro, SoDienThoai, DiaChi) VALUES
 (N'Minh Phúc', 'phuc@gmail.com', N'Người mua', '0901234567', N'Hà Nội'),
 (N'Thanh Hà', 'ha@gmail.com', N'Người bán', '0902345678', N'TP. Hồ Chí Minh'),
@@ -75,15 +62,10 @@ INSERT INTO DonHang (MaNguoiMua, MaDoChoi, SoLuong, TongTien, TrangThai, AnhURL)
 (1, 1, 1, 850000, N'Hoàn thành', N'/anh/lego_don_canh_sat.jpg'),
 (3, 5, 1, 150000, N'Đang xử lý', N'/anh/ghep_hinh_dong_vat.jpg'),
 (5, 2, 1, 450000, N'Đang giao', N'/anh/robot_optimus.jpg');
-INSERT INTO YeuCauTraoDoi (MaDoChoiDeNghi, MaDoChoiMuon, MaNguoiDung, TrangThai, AnhDoNghi, AnhDoMuon) VALUES
-(3, 1, 1, N'Chờ duyệt', N'/anh/barbie_cong_chua.jpg', N'/anh/lego_don_canh_sat.jpg'),
-(5, 2, 3, N'Đã chấp nhận', N'/anh/ghep_hinh_dong_vat.jpg', N'/anh/robot_optimus.jpg'),
-(1, 4, 1, N'Từ chối', N'/anh/lego_don_canh_sat.jpg', N'/anh/xe_rc_dua.jpg');
 
 
 Select * from NguoiDung
 Select * from DanhMuc
 Select * from DoChoi
 Select * from DonHang
-Select * from YeuCauTraoDoi
 

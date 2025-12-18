@@ -20,9 +20,13 @@ def get_connection():
 # ==============================
 # Trang chủ (frontend)
 # ==============================
-# @app.route('/')
-# def home():
-  #  return render_template('index.html')
+@app.route('/')
+def home():
+    return send_from_directory('html', 'index.html')
+
+@app.route('/admin')
+def admin():
+    return send_from_directory('admin', 'admin.html')
 
 
 # ==============================
@@ -152,6 +156,130 @@ def api_dochoi_delete(ma_do_choi):
         return jsonify({"message": "Sản phẩm đã được xóa thành công"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+# ADMIN
+@app.route('/api/admin/nguoidung', methods=['GET'])
+def admin_get_nguoidung():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT MaNguoiDung, TenNguoiDung, Email, VaiTro, SoDienThoai, DiaChi
+        FROM NguoiDung
+        ORDER BY MaNguoiDung DESC
+    """)
+    rows = cur.fetchall()
+    conn.close()
+
+    return jsonify([
+        {
+            "MaNguoiDung": r[0],
+            "TenNguoiDung": r[1],
+            "Email": r[2],
+            "VaiTro": r[3],
+            "SoDienThoai": r[4],
+            "DiaChi": r[5]
+        } for r in rows
+    ])
+
+
+@app.route('/api/admin/dochoi', methods=['GET'])
+def admin_get_dochoi():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT MaDoChoi, TenDoChoi, Gia, MoTa, AnhURL, MaNguoiBan, MaDanhMuc
+        FROM DoChoi
+        ORDER BY MaDoChoi DESC
+    """)
+    rows = cur.fetchall()
+    conn.close()
+
+    return jsonify([
+        {
+            "MaDoChoi": r[0],
+            "TenDoChoi": r[1],
+            "Gia": r[2],
+            "MoTa": r[3],
+            "AnhURL": r[4],
+            "MaNguoiBan": r[5],
+            "MaDanhMuc": r[6]
+        } for r in rows
+    ])
+
+@app.route('/api/admin/dochoi', methods=['POST'])
+def admin_add_dochoi():
+    data = request.json
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        INSERT INTO DoChoi (TenDoChoi, Gia, MoTa, MaNguoiBan, MaDanhMuc, AnhURL)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+        data['TenDoChoi'],
+        data['Gia'],
+        data['MoTa'],
+        data['MaNguoiBan'],
+        data['MaDanhMuc'],
+        data['AnhURL']
+    ))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Đã thêm sản phẩm"})
+
+@app.route('/api/admin/dochoi/<int:id>', methods=['PUT'])
+def admin_update_dochoi(id):
+    data = request.json
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        UPDATE DoChoi
+        SET TenDoChoi=?, Gia=?, MoTa=?, AnhURL=?
+        WHERE MaDoChoi=?
+    """, (
+        data['TenDoChoi'],
+        data['Gia'],
+        data['MoTa'],
+        data['AnhURL'],
+        id
+    ))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Đã cập nhật"})
+
+@app.route('/api/admin/dochoi/<int:id>', methods=['DELETE'])
+def admin_delete_dochoi(id):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM DoChoi WHERE MaDoChoi=?", (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({"message": "Đã xóa"})
+
+@app.route('/api/admin/donhang', methods=['GET'])
+def admin_get_donhang():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT d.MaDonHang, n.TenNguoiDung, c.TenDoChoi, d.SoLuong, d.TongTien, d.TrangThai
+        FROM DonHang d
+        JOIN NguoiDung n ON d.MaNguoiMua = n.MaNguoiDung
+        JOIN DoChoi c ON d.MaDoChoi = c.MaDoChoi
+        ORDER BY d.MaDonHang DESC
+    """)
+    rows = cur.fetchall()
+    conn.close()
+
+    return jsonify([
+        {
+            "MaDonHang": r[0],
+            "NguoiMua": r[1],
+            "SanPham": r[2],
+            "SoLuong": r[3],
+            "TongTien": r[4],
+            "TrangThai": r[5]
+        } for r in rows
+    ])
+
 
 # ==============================
 # Chạy ứng dụng Flask
