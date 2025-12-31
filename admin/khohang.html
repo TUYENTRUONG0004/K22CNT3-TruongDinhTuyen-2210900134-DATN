@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Kho hàng – TOYWORLD Admin</title>
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">TOYWORLD</div>
+      <nav class="nav">
+        <a class="nav-item" href="tongquan.html"><i class="fas fa-home"></i> Tổng quan</a>
+        <a class="nav-item" href="sanpham.html"><i class="fas fa-cube"></i> Sản phẩm</a>
+        <a class="nav-item" href="danhmuc.html"><i class="fas fa-tags"></i> Danh mục</a>
+        <a class="nav-item" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
+        <a class="nav-item" href="khuyenmai.html"><i class="fas fa-gift"></i> Khuyến mãi</a>
+        <a class="nav-item" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+        <a class="nav-item" href="nguoidung.html"><i class="fas fa-users"></i> Người dùng</a>
+        <a class="nav-item active" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <h1 class="page-title">Quản lý Kho hàng</h1>
+
+      <div class="panel">
+        <h3>Cập nhật tồn kho</h3>
+        <form id="inventoryForm">
+          <input type="hidden" id="editKhoId">
+
+          <div class="form-row">
+            <label>Sản phẩm</label>
+            <input id="productInfo" readonly placeholder="Chọn sản phẩm từ bảng bên dưới">
+          </div>
+
+          <div class="form-row">
+            <label>Số lượng hiện tại</label>
+            <input id="currentStock" readonly>
+          </div>
+
+          <div class="form-row">
+            <label>Số lượng mới</label>
+            <input id="newStock" type="number" min="0" required placeholder="Nhập số lượng mới">
+          </div>
+
+          <button type="submit" class="btn primary">Cập nhật kho</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h3>Danh sách tồn kho</h3>
+        <table id="inventoryTable" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Ảnh</th>
+              <th>Tên sản phẩm</th>
+              <th>Số lượng tồn</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS sẽ render vào đây -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+  <script src="../admin/js/admin.js"></script>
+  <script src="../admin/js/khohang.js"></script>
+</body>
+</html>

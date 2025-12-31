@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng - TOYWORLD</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS chung -->
+    <link href="../css/index.css" rel="stylesheet">
+    <!-- CSS riêng cho cart -->
+    <link href="../css/cart.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-custom d-flex align-items-center px-4 px-lg-5">
+        <div class="logo">TOYWORLD</div>
+        <div class="nav-right">
+            <a href="index.html">Trang Chủ</a>
+            <a href="shop.html">Shop</a>
+            <a href="about.html">Giới Thiệu</a>
+            <a href="contact.html">Liên Hệ</a>
+            <a href="cart.html" class="position-relative active">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="badge bg-danger rounded-pill badge-cart" id="cart-count">0</span>
+            </a>
+            <a href="orders.html">
+                <i class="fas fa-history fa-lg" title="Lịch sử đơn hàng"></i>
+            </a>
+            <a href="login.html">
+                <i class="fas fa-user fa-lg"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-content container py-5">
+        <h2 class="mb-4 text-center fw-bold">Giỏ Hàng Của Bạn</h2>
+
+        <div class="row">
+            <!-- Danh sách sản phẩm -->
+            <div class="col-lg-8">
+                <div id="cart-empty" class="text-center py-5 d-none">
+                    <i class="fas fa-shopping-cart fa-5x text-muted mb-4"></i>
+                    <h4>Giỏ hàng trống</h4>
+                    <p>Hãy thêm sản phẩm từ cửa hàng nhé!</p>
+                    <a href="shop.html" class="btn btn-danger btn-lg">Tiếp tục mua sắm</a>
+                </div>
+
+                <div id="cart-items"></div>
+            </div>
+
+            <!-- Tổng tiền & Thanh toán -->
+            <div class="col-lg-4">
+                <div class="cart-summary bg-white rounded-20 p-4 shadow">
+                    <h4 class="fw-bold mb-4">Tổng đơn hàng</h4>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Tạm tính (<span id="total-items">0</span> sản phẩm):</span>
+                        <span id="subtotal">0 ₫</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Phí vận chuyển:</span>
+                        <span class="text-success">Miễn phí</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <h5 class="fw-bold">Thành tiền:</h5>
+                        <h5 class="text-danger fw-bold" id="total-price">0 ₫</h5>
+                    </div>
+                    <button id="checkout-btn" class="btn btn-danger btn-lg w-100" disabled>
+                        Tiến hành thanh toán
+                    </button>
+                    <a href="shop.html" class="btn btn-outline-secondary w-100 mt-3">
+                        Tiếp tục mua sắm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS riêng cho cart -->
+    <script src="../js/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sản phẩm – TOYWORLD Admin</title>
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">TOYWORLD</div>
+      <nav class="nav">
+        <a class="nav-item" href="tongquan.html"><i class="fas fa-home"></i> Tổng quan</a>
+        <a class="nav-item" href="sanpham.html"><i class="fas fa-cube"></i> Sản phẩm</a>
+        <a class="nav-item" href="danhmuc.html"><i class="fas fa-tags"></i> Danh mục</a>
+        <a class="nav-item" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
+        <a class="nav-item" href="khuyenmai.html"><i class="fas fa-gift"></i> Khuyến mãi</a>
+        <a class="nav-item" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+        <a class="nav-item" href="nguoidung.html"><i class="fas fa-users"></i> Người dùng</a>
+        <a class="nav-item active" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <h1 class="page-title">Quản lý Sản phẩm</h1>
+
+      <!-- Form thêm/sửa sản phẩm -->
+      <div class="panel">
+        <h3>Thêm / Sửa sản phẩm</h3>
+        <form id="productForm">
+          <input type="hidden" id="editProductId">
+
+          <div class="form-row">
+            <label>Tên sản phẩm *</label>
+            <input id="ten" required placeholder="Ví dụ: Lego Thành Phố">
+          </div>
+
+          <div class="form-row">
+            <label>Giá (VNĐ) *</label>
+            <input id="gia" type="number" min="0" required placeholder="850000">
+          </div>
+
+          <div class="form-row">
+            <label>Danh mục *</label>
+            <select id="danhMuc" required></select>
+          </div>
+
+          <div class="form-row">
+            <label>Ảnh sản phẩm</label>
+            <input type="file" id="anh" accept="image/*">
+            <div class="preview" id="preview">
+              <!-- Ảnh preview sẽ hiện ở đây -->
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Mô tả</label>
+            <textarea id="moTa" rows="5" placeholder="Mô tả chi tiết về sản phẩm..."></textarea>
+          </div>
+
+          <button type="submit" class="btn primary">Lưu sản phẩm</button>
+        </form>
+      </div>
+
+      <!-- Danh sách sản phẩm -->
+      <div class="panel">
+        <h3>Danh sách sản phẩm</h3>
+        <table id="productTable" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Ảnh</th>
+              <th>Tên sản phẩm</th>
+              <th>Giá</th>
+              <th>Danh mục</th>
+              <th>Tồn kho</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS sẽ render dữ liệu vào đây -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast thông báo -->
+  <div id="toast"></div>
+
+  <script src="../admin/js/admin.js"></script>
+  <script src="../admin/js/sanpham.js"></script>
+</body>
+</html>

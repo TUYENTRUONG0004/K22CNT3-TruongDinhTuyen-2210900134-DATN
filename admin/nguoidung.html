@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Người dùng – TOYWORLD Admin</title>
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">TOYWORLD</div>
+      <nav class="nav">
+        <a class="nav-item" href="tongquan.html"><i class="fas fa-home"></i> Tổng quan</a>
+        <a class="nav-item" href="sanpham.html"><i class="fas fa-cube"></i> Sản phẩm</a>
+        <a class="nav-item" href="danhmuc.html"><i class="fas fa-tags"></i> Danh mục</a>
+        <a class="nav-item" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
+        <a class="nav-item" href="khuyenmai.html"><i class="fas fa-gift"></i> Khuyến mãi</a>
+        <a class="nav-item" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+        <a class="nav-item" href="nguoidung.html"><i class="fas fa-users"></i> Người dùng</a>
+        <a class="nav-item active" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <h1 class="page-title">Quản lý Người dùng</h1>
+
+      <div class="panel">
+        <h3>Danh sách người dùng</h3>
+        <table id="userTable" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Họ tên</th>
+              <th>Email</th>
+              <th>Vai trò</th>
+              <th>SĐT</th>
+              <th>Ngày tạo</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS sẽ render dữ liệu -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal sửa người dùng -->
+  <div id="editModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h3>Sửa thông tin người dùng</h3>
+      <form id="editUserForm">
+        <input type="hidden" id="editUserId">
+
+        <div class="form-row">
+          <label>Họ tên</label>
+          <input id="editTen" required>
+        </div>
+
+        <div class="form-row">
+          <label>Email</label>
+          <input id="editEmail" type="email" required>
+        </div>
+
+        <div class="form-row">
+          <label>Đổi mật khẩu (để trống nếu không đổi)</label>
+          <input id="editMatKhau" type="password">
+        </div>
+
+        <div class="form-row">
+          <label>Vai trò</label>
+          <select id="editVaiTro">
+            <option value="NguoiMua">Người mua</option>
+            <option value="NguoiBan">Người bán</option>
+            <option value="Admin">Quản trị viên</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Số điện thoại</label>
+          <input id="editSoDienThoai">
+        </div>
+
+        <button type="submit" class="btn primary">Cập nhật</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="../admin/js/admin.js"></script>
+  <script src="../admin/js/nguoidung.js"></script>
+</body>
+</html>

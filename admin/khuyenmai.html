@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Khuyến mãi – TOYWORLD Admin</title>
+  <link rel="stylesheet" href="../admin/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">TOYWORLD</div>
+      <nav class="nav">
+        <a class="nav-item" href="tongquan.html"><i class="fas fa-home"></i> Tổng quan</a>
+        <a class="nav-item" href="sanpham.html"><i class="fas fa-cube"></i> Sản phẩm</a>
+        <a class="nav-item" href="danhmuc.html"><i class="fas fa-tags"></i> Danh mục</a>
+        <a class="nav-item" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
+        <a class="nav-item" href="khuyenmai.html"><i class="fas fa-gift"></i> Khuyến mãi</a>
+        <a class="nav-item" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+        <a class="nav-item" href="nguoidung.html"><i class="fas fa-users"></i> Người dùng</a>
+        <a class="nav-item active" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <h1 class="page-title">Quản lý Khuyến mãi</h1>
+
+      <div class="panel">
+        <h3>Thêm / Sửa khuyến mãi</h3>
+        <form id="promotionForm">
+          <input type="hidden" id="editPromotionId">
+
+          <div class="form-row">
+            <label>Mã khuyến mãi</label>
+            <input id="maCode" required placeholder="VD: GIAM20">
+          </div>
+
+          <div class="form-row">
+            <label>Tên khuyến mãi</label>
+            <input id="tenKhuyenMai" required placeholder="Giảm 20% toàn bộ đơn">
+          </div>
+
+          <div class="form-row">
+            <label>Loại giảm</label>
+            <select id="loai">
+              <option value="Percent">Phần trăm (%)</option>
+              <option value="Amount">Số tiền (VNĐ)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label>Giá trị giảm</label>
+            <input id="giaTri" type="number" min="1" required placeholder="20 hoặc 50000">
+          </div>
+
+          <div class="form-row">
+            <label>Điều kiện tối thiểu (VNĐ)</label>
+            <input id="dieuKien" type="number" min="0" value="0" placeholder="0 = không điều kiện">
+          </div>
+
+          <div class="form-row">
+            <label>Trạng thái</label>
+            <select id="trangThai">
+              <option value="Active">Hoạt động</option>
+              <option value="Inactive">Tạm dừng</option>
+            </select>
+          </div>
+
+          <button type="submit" id="promotionSubmitBtn" class="btn primary">Lưu khuyến mãi</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h3>Danh sách khuyến mãi</h3>
+        <table id="promotionTable" class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Mã code</th>
+              <th>Tên khuyến mãi</th>
+              <th>Loại</th>
+              <th>Giá trị</th>
+              <th>Điều kiện</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS render -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+  <script src="../admin/js/admin.js"></script>
+  <script src="../admin/js/khuyenmai.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Sử Đơn Hàng - TOYWORLD</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS chung -->
+    <link href="../css/index.css" rel="stylesheet">
+    <!-- CSS riêng cho orders -->
+    <link href="../css/orders.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-custom d-flex align-items-center px-4 px-lg-5">
+        <div class="logo">TOYWORLD</div>
+        <div class="nav-right">
+            <a href="index.html">Trang Chủ</a>
+            <a href="shop.html">Shop</a>
+            <a href="about.html">Giới Thiệu</a>
+            <a href="contact.html">Liên Hệ</a>
+            <a href="cart.html" class="position-relative">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="badge bg-danger rounded-pill badge-cart" id="cart-count">0</span>
+            </a>
+            <a href="orders.html" class="active">
+                <i class="fas fa-history fa-lg" title="Lịch sử đơn hàng"></i>
+            </a>
+            <a href="login.html">
+                <i class="fas fa-user fa-lg"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-content container py-5">
+        <h2 class="mb-5 text-center fw-bold">Lịch Sử Đơn Hàng</h2>
+
+        <div id="no-orders" class="text-center py-5 d-none">
+            <i class="fas fa-box-open fa-5x text-muted mb-4"></i>
+            <h4>Chưa có đơn hàng nào</h4>
+            <p>Hãy mua sắm và đặt hàng để xem lịch sử tại đây nhé!</p>
+            <a href="shop.html" class="btn btn-danger btn-lg">Tiếp tục mua sắm</a>
+        </div>
+
+        <div class="row" id="orders-list">
+            <!-- Đơn hàng sẽ được load bằng JS -->
+        </div>
+    </div>
+
+    <!-- MODAL CHI TIẾT ĐƠN HÀNG -->
+    <div class="modal fade" id="orderDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi Tiết Đơn Hàng #<span id="modal-order-id"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Ngày đặt:</strong> <span id="modal-date"></span></p>
+                    <p><strong>Trạng thái:</strong> <span class="badge bg-warning" id="modal-status">Đang xử lý</span></p>
+                    <p><strong>Tổng tiền:</strong> <span class="text-danger fw-bold" id="modal-total"></span></p>
+
+                    <h5 class="mt-4">Thông tin giao hàng</h5>
+                    <p id="modal-customer"></p>
+
+                    <h5 class="mt-4">Sản phẩm</h5>
+                    <div id="modal-items"></div>
+
+                    <h5 class="mt-4">Phương thức thanh toán</h5>
+                    <p id="modal-payment"></p>
+
+                    <p class="mt-3" id="modal-note"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS riêng -->
+    <script src="../js/orders.js"></script>
+</body>
+</html>

@@ -1,67 +1,60 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đồ Chơi Trí Tuệ-TOYWORLD </title>
-
-    <!-- Bootstrap -->
+    <title>Đồ Chơi Trí Tuệ - TOYWORLD</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- CSS riêng -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="../css/index.css" rel="stylesheet">
 </head>
-
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar-custom">
-        <div class="nav-left">
-            <span class="logo">TOYWORLD</span>
-        </div>
-
+    <nav class="navbar-custom d-flex align-items-center px-4 px-lg-5">
+        <div class="logo">TOYWORLD</div>
         <div class="nav-right">
-            <a href="index.html">Trang Chủ</a>
-            <a href="index.html">Shop</a>
+            <a href="index.html" class="active">Trang Chủ</a>
+            <a href="shop.html">Shop</a>
             <a href="about.html">Giới Thiệu</a>
             <a href="contact.html">Liên Hệ</a>
         </div>
     </nav>
 
-    <!-- MAIN -->
-    <div class="main-content">
+    <div class="main-content container">
 
-        <!-- HERO -->
+        <!-- HERO SECTION -->
         <div class="hero-section">
             <h1>Best Toys for Kids</h1>
-            <p>Lựa chọn hàng đầu của bố mẹ cho sự phát triển trí tuệ của trẻ</p>
-            <button class="btn btn-danger btn-lg">Order Now</button>
+            <p>Lựa chọn hàng đầu của bố mẹ cho sự phát triển trí tuệ và sáng tạo của bé yêu</p>
+            <button class="btn btn-danger">Mua Ngay Hôm Nay</button>
         </div>
 
-        <!-- SEARCH -->
+        <!-- SEARCH & FILTER -->
         <div class="search-filter">
-            <input type="text" class="search-input" placeholder="Tìm kiếm sản phẩm...">
+            <input type="text" class="search-input" placeholder="Tìm kiếm sản phẩm... (Lego, Robot, Búp bê...)">
             <select class="filter-select">
-                <option value="">Danh mục</option>
+                <option value="">Tất cả danh mục</option>
                 <option>Lego</option>
                 <option>Robot</option>
                 <option>Búp bê</option>
                 <option>Xe điều khiển</option>
+                <option>Đồ chơi giáo dục</option>
             </select>
-            <button class="btn btn-success">Tìm kiếm</button>
+            <button class="btn btn-success">
+                <i class="fas fa-search me-2"></i>Tìm kiếm
+            </button>
         </div>
 
         <!-- PRODUCT LIST -->
-        <div id="product-list" class="row">
-            <!-- JS sẽ đổ sản phẩm -->
+        <div class="row" id="product-list">
+            <!-- Sản phẩm sẽ được load bằng JS -->
         </div>
 
     </div>
 
-    <!-- JS -->
     <script src="../js/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

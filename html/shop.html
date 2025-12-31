@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Đồ Chơi - TOYWORLD</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS chung -->
+    <link href="../css/index.css" rel="stylesheet">
+    <!-- CSS riêng cho shop -->
+    <link href="../css/shop.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar-custom d-flex align-items-center px-4 px-lg-5">
+        <div class="logo">TOYWORLD</div>
+        <div class="nav-right">
+            <a href="index.html">Trang Chủ</a>
+            <a href="shop.html" class="active">Shop</a>
+            <a href="about.html">Giới Thiệu</a>
+            <a href="contact.html">Liên Hệ</a>
+            <a href="cart.html" class="position-relative">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="badge bg-danger rounded-pill badge-cart" id="cart-count">0</span>
+            </a>
+            <a href="orders.html">
+                <i class="fas fa-history fa-lg" title="Lịch sử đơn hàng"></i>
+            </a>
+            <a href="login.html" id="login-link">
+                <i class="fas fa-user fa-lg"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-content container py-5">
+
+        <h2 class="mb-4 text-center fw-bold">Cửa Hàng Đồ Chơi Trí Tuệ</h2>
+
+        <!-- SEARCH & FILTER -->
+        <div class="search-filter mb-5">
+            <input type="text" id="search-input" class="search-input" placeholder="Tìm kiếm sản phẩm...">
+            <select id="category-filter" class="filter-select">
+                <option value="">Tất cả danh mục</option>
+            </select>
+            <button class="btn btn-success" id="search-btn">
+                <i class="fas fa-search me-2"></i>Tìm kiếm
+            </button>
+        </div>
+
+        <!-- PRODUCT GRID -->
+        <div class="row" id="product-list">
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-pink" role="status">
+                    <span class="visually-hidden">Đang tải...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CHI TIẾT SẢN PHẨM -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title">Chi tiết sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <img id="modal-image" src="" class="img-fluid rounded" alt="Ảnh sản phẩm">
+                        </div>
+                        <div class="col-md-7">
+                            <h3 id="modal-name"></h3>
+                            <p class="text-muted" id="modal-category"></p>
+                            <div class="mb-3">
+                                <span class="h4 text-danger fw-bold" id="modal-price"></span>
+                            </div>
+                            <p id="modal-description" class="text-muted"></p>
+                            <div class="mb-3">
+                                <label class="form-label">Số lượng:</label>
+                                <input type="number" id="modal-quantity" class="form-control w-25 d-inline" value="1" min="1">
+                            </div>
+                            <button class="btn btn-danger btn-lg" id="add-to-cart-modal">
+                                <i class="fas fa-cart-plus me-2"></i>Thêm vào giỏ hàng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS riêng cho shop -->
+    <script src="../js/shop.js"></script>
+</body>
+</html>
