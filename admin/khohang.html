@@ -14,50 +14,83 @@
         <a class="nav-item" href="tongquan.html"><i class="fas fa-home"></i> Tổng quan</a>
         <a class="nav-item" href="sanpham.html"><i class="fas fa-cube"></i> Sản phẩm</a>
         <a class="nav-item" href="danhmuc.html"><i class="fas fa-tags"></i> Danh mục</a>
-        <a class="nav-item" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
+        <a class="nav-item active" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
         <a class="nav-item" href="khuyenmai.html"><i class="fas fa-gift"></i> Khuyến mãi</a>
         <a class="nav-item" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
         <a class="nav-item" href="nguoidung.html"><i class="fas fa-users"></i> Người dùng</a>
-        <a class="nav-item active" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
+        <a class="nav-item" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
       </nav>
     </aside>
 
     <main class="main">
       <h1 class="page-title">Quản lý Kho hàng</h1>
 
+      <!-- Form thêm/sửa kho hàng -->
       <div class="panel">
-        <h3>Cập nhật tồn kho</h3>
+        <h3 id="formTitle">Thêm / Cập nhật tồn kho</h3>
         <form id="inventoryForm">
           <input type="hidden" id="editKhoId">
+          <input type="hidden" id="formMode" value="add">
 
           <div class="form-row">
-            <label>Sản phẩm</label>
-            <input id="productInfo" readonly placeholder="Chọn sản phẩm từ bảng bên dưới">
+            <label>Sản phẩm *</label>
+            <select id="productSelect" required>
+              <option value="">-- Chọn sản phẩm --</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label>Thông tin sản phẩm</label>
+            <input id="productInfo" readonly placeholder="Chọn sản phẩm để xem thông tin">
           </div>
 
           <div class="form-row">
             <label>Số lượng hiện tại</label>
-            <input id="currentStock" readonly>
+            <input id="currentStock" readonly value="0">
           </div>
 
           <div class="form-row">
-            <label>Số lượng mới</label>
-            <input id="newStock" type="number" min="0" required placeholder="Nhập số lượng mới">
+            <label>Số lượng mới *</label>
+            <input id="newStock" type="number" min="0" required placeholder="Nhập số lượng">
           </div>
 
-          <button type="submit" class="btn primary">Cập nhật kho</button>
+          <div class="form-row" style="display: flex; gap: 10px;">
+            <button type="submit" class="btn primary" id="submitBtn">Lưu kho hàng</button>
+            <button type="button" class="btn ghost" onclick="resetForm()">Hủy</button>
+          </div>
         </form>
       </div>
 
+      <!-- Danh sách tồn kho -->
       <div class="panel">
         <h3>Danh sách tồn kho</h3>
         <table id="inventoryTable" class="table">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>ID SP</th>
               <th>Ảnh</th>
               <th>Tên sản phẩm</th>
               <th>Số lượng tồn</th>
+              <th>Ngày cập nhật</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- JS sẽ render vào đây -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Sản phẩm chưa có trong kho -->
+      <div class="panel">
+        <h3>Sản phẩm chưa có trong kho</h3>
+        <table id="noStockTable" class="table">
+          <thead>
+            <tr>
+              <th>ID SP</th>
+              <th>Ảnh</th>
+              <th>Tên sản phẩm</th>
+              <th>Giá</th>
               <th>Hành động</th>
             </tr>
           </thead>

@@ -13,13 +13,13 @@
       <div class="brand">TOYWORLD</div>
       <nav class="nav">
         <a class="nav-item" href="tongquan.html"><i class="fas fa-home"></i> Tổng quan</a>
-        <a class="nav-item" href="sanpham.html"><i class="fas fa-cube"></i> Sản phẩm</a>
+        <a class="nav-item active" href="sanpham.html"><i class="fas fa-cube"></i> Sản phẩm</a>
         <a class="nav-item" href="danhmuc.html"><i class="fas fa-tags"></i> Danh mục</a>
         <a class="nav-item" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
         <a class="nav-item" href="khuyenmai.html"><i class="fas fa-gift"></i> Khuyến mãi</a>
         <a class="nav-item" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
         <a class="nav-item" href="nguoidung.html"><i class="fas fa-users"></i> Người dùng</a>
-        <a class="nav-item active" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
+        <a class="nav-item" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
       </nav>
     </aside>
 
@@ -39,19 +39,21 @@
 
           <div class="form-row">
             <label>Giá (VNĐ) *</label>
-            <input id="gia" type="number" min="0" required placeholder="850000">
+            <input id="gia" type="number" min="1" required placeholder="850000">
           </div>
 
           <div class="form-row">
             <label>Danh mục *</label>
-            <select id="danhMuc" required></select>
+            <select id="danhMuc" required>
+              <option value="">-- Chọn danh mục --</option>
+            </select>
           </div>
 
           <div class="form-row">
             <label>Ảnh sản phẩm</label>
             <input type="file" id="anh" accept="image/*">
             <div class="preview" id="preview">
-              <!-- Ảnh preview sẽ hiện ở đây -->
+              <p>Chưa chọn ảnh</p>
             </div>
           </div>
 

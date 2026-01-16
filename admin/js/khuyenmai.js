@@ -1,5 +1,3 @@
-// promotions.js - Quản lý Khuyến Mãi
-
 const API_BASE = 'http://127.0.0.1:5000/api';
 let promotions = [];
 
@@ -11,32 +9,17 @@ async function loadPromotions() {
         renderPromotionTable();
     } catch (err) {
         showToast('Lỗi tải khuyến mãi', 'error');
-        const table = document.getElementById('promotionTable');
-        if (table) table.innerHTML = `<tr><td colspan="7" class="text-center text-danger py-4">Lỗi kết nối server</td></tr>`;
     }
 }
 
 function renderPromotionTable() {
-    const table = document.getElementById('promotionTable');
-    if (!table) return;
+    const tbody = document.querySelector('#promotionTable tbody');
+    tbody.innerHTML = '';
 
     if (promotions.length === 0) {
-        table.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">Chưa có khuyến mãi nào</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">Chưa có khuyến mãi</td></tr>`;
         return;
     }
-
-    table.innerHTML = `
-        <tr>
-            <th>ID</th>
-            <th>Mã code</th>
-            <th>Tên khuyến mãi</th>
-            <th>Loại</th>
-            <th>Giá trị</th>
-            <th>Điều kiện tối thiểu</th>
-            <th>Trạng thái</th>
-            <th>Hành động</th>
-        </tr>
-    `;
 
     promotions.forEach(p => {
         const tr = document.createElement('tr');
@@ -49,15 +32,11 @@ function renderPromotionTable() {
             <td>${p.DieuKienToiThieu.toLocaleString('vi-VN')} ₫</td>
             <td><span class="badge ${p.TrangThai === 'Active' ? 'bg-success' : 'bg-secondary'}">${p.TrangThai === 'Active' ? 'Hoạt động' : 'Tạm dừng'}</span></td>
             <td>
-                <button class="btn ghost small" onclick="editPromotion(${p.MaKhuyenMai}, '${escapeHtml(p.MaCode)}', '${escapeHtml(p.TenKhuyenMai)}', '${p.Loai}', ${p.GiaTri}, ${p.DieuKienToiThieu}, '${p.TrangThai}')">
-                    Sửa
-                </button>
-                <button class="btn danger small" onclick="deletePromotion(${p.MaKhuyenMai})">
-                    Xóa
-                </button>
+                <button class="btn ghost small" onclick="editPromotion(${p.MaKhuyenMai})">Sửa</button>
+                <button class="btn danger small" onclick="deletePromotion(${p.MaKhuyenMai})">Xóa</button>
             </td>
         `;
-        table.appendChild(tr);
+        tbody.appendChild(tr);
     });
 }
 
@@ -67,29 +46,30 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-function editPromotion(id, code, name, type, value, min, status) {
+function editPromotion(id) {
+    const p = promotions.find(x => x.MaKhuyenMai === id);
+    if (!p) return;
+
     document.getElementById('editPromotionId').value = id;
-    document.getElementById('maCode').value = code;
-    document.getElementById('tenKhuyenMai').value = name;
-    document.getElementById('loai').value = type;
-    document.getElementById('giaTri').value = value;
-    document.getElementById('dieuKien').value = min;
-    document.getElementById('trangThai').value = status;
+    document.getElementById('maCode').value = p.MaCode;
+    document.getElementById('tenKhuyenMai').value = p.TenKhuyenMai;
+    document.getElementById('loai').value = p.Loai;
+    document.getElementById('giaTri').value = p.GiaTri;
+    document.getElementById('dieuKien').value = p.DieuKienToiThieu;
+    document.getElementById('trangThai').value = p.TrangThai;
     document.getElementById('promotionSubmitBtn').textContent = 'Cập nhật khuyến mãi';
-    showToast(`Đang sửa: ${code}`);
 }
 
 async function deletePromotion(id) {
-    if (!confirm('Xóa khuyến mãi này? Các đơn hàng đã áp dụng sẽ không bị ảnh hưởng.')) return;
+    if (!confirm('Xóa khuyến mãi này?')) return;
 
     try {
         const res = await fetch(`${API_BASE}/khuyenmai/${id}`, { method: 'DELETE' });
         if (!res.ok) throw new Error('Xóa thất bại');
-        const data = await res.json();
-        showToast(data.message || 'Xóa thành công');
-        loadPromotions();
+        showToast('Xóa khuyến mãi thành công!');
+        location.reload();
     } catch (err) {
-        showToast('Lỗi xóa khuyến mãi', 'error');
+        showToast('Lỗi xóa', 'error');
     }
 }
 
@@ -126,18 +106,11 @@ document.getElementById('promotionForm')?.addEventListener('submit', async (e) =
             throw new Error(err.error || 'Thao tác thất bại');
         }
 
-        const result = await res.json();
-        showToast(result.message || (id ? 'Cập nhật thành công!' : 'Thêm khuyến mãi thành công!'));
-
-        document.getElementById('promotionForm').reset();
-        document.getElementById('editPromotionId').value = '';
-        document.getElementById('promotionSubmitBtn').textContent = 'Thêm khuyến mãi';
-
-        loadPromotions();
+        showToast(id ? 'Cập nhật thành công!' : 'Thêm khuyến mãi thành công!');
+        location.reload();
     } catch (err) {
         showToast(err.message, 'error');
     }
 });
 
-// Load khi trang sẵn sàng
 document.addEventListener('DOMContentLoaded', loadPromotions);

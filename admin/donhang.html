@@ -5,6 +5,102 @@
   <title>Đơn hàng – TOYWORLD Admin</title>
   <link rel="stylesheet" href="../admin/css/admin.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .order-detail-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .order-detail-modal.show {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #e91e63;
+    }
+    .modal-header h3 {
+      margin: 0;
+      color: #333;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+    .close-btn:hover {
+      color: #e91e63;
+    }
+    .order-info {
+      margin-bottom: 1.5rem;
+    }
+    .order-info p {
+      margin: 0.5rem 0;
+    }
+    .order-items {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .order-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .order-item:last-child {
+      border-bottom: none;
+    }
+    .order-item img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 1rem;
+    }
+    .order-item-info {
+      flex: 1;
+    }
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .status-pending { background: #fff3e0; color: #e65100; }
+    .status-processing { background: #e3f2fd; color: #1565c0; }
+    .status-shipping { background: #f3e5f5; color: #7b1fa2; }
+    .status-completed { background: #e8f5e9; color: #2e7d32; }
+    .status-cancelled { background: #ffebee; color: #c62828; }
+    .btn.danger {
+      background: #dc3545;
+      color: white;
+    }
+    .btn.danger:hover {
+      background: #c82333;
+    }
+  </style>
 </head>
 <body>
   <div class="layout">
@@ -16,22 +112,44 @@
         <a class="nav-item" href="danhmuc.html"><i class="fas fa-tags"></i> Danh mục</a>
         <a class="nav-item" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
         <a class="nav-item" href="khuyenmai.html"><i class="fas fa-gift"></i> Khuyến mãi</a>
-        <a class="nav-item" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+        <a class="nav-item active" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
         <a class="nav-item" href="nguoidung.html"><i class="fas fa-users"></i> Người dùng</a>
-        <a class="nav-item active" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
+        <a class="nav-item" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
       </nav>
     </aside>
 
     <main class="main">
       <h1 class="page-title">Quản lý Đơn hàng</h1>
 
+      <!-- Thống kê nhanh -->
+      <div class="stats-row" style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+        <div class="stat-card" style="flex: 1; background: #fff3e0; padding: 1rem; border-radius: 10px; text-align: center;">
+          <div style="font-size: 1.5rem; font-weight: bold; color: #e65100;" id="stat-pending">0</div>
+          <div style="color: #666;">Chờ xác nhận</div>
+        </div>
+        <div class="stat-card" style="flex: 1; background: #e3f2fd; padding: 1rem; border-radius: 10px; text-align: center;">
+          <div style="font-size: 1.5rem; font-weight: bold; color: #1565c0;" id="stat-processing">0</div>
+          <div style="color: #666;">Đang xử lý</div>
+        </div>
+        <div class="stat-card" style="flex: 1; background: #f3e5f5; padding: 1rem; border-radius: 10px; text-align: center;">
+          <div style="font-size: 1.5rem; font-weight: bold; color: #7b1fa2;" id="stat-shipping">0</div>
+          <div style="color: #666;">Đang giao</div>
+        </div>
+        <div class="stat-card" style="flex: 1; background: #e8f5e9; padding: 1rem; border-radius: 10px; text-align: center;">
+          <div style="font-size: 1.5rem; font-weight: bold; color: #2e7d32;" id="stat-completed">0</div>
+          <div style="color: #666;">Hoàn thành</div>
+        </div>
+      </div>
+
       <div class="panel">
+        <h3>Danh sách đơn hàng</h3>
         <table id="orderTable" class="table">
           <thead>
             <tr>
               <th>Mã đơn</th>
               <th>Ngày đặt</th>
               <th>Khách hàng</th>
+              <th>SĐT</th>
               <th>Tổng tiền</th>
               <th>Trạng thái</th>
               <th>Hành động</th>
@@ -43,6 +161,29 @@
         </table>
       </div>
     </main>
+  </div>
+
+  <!-- Modal chi tiết đơn hàng -->
+  <div class="order-detail-modal" id="orderModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fas fa-receipt me-2"></i>Chi tiết đơn hàng <span id="modal-order-id"></span></h3>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="order-info" id="modal-order-info">
+        <!-- JS render -->
+      </div>
+      <h4>Sản phẩm đã đặt</h4>
+      <div class="order-items" id="modal-order-items">
+        <!-- JS render -->
+      </div>
+      <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+        <button class="btn primary" onclick="closeModal()">Đóng</button>
+        <button class="btn danger" id="modal-delete-btn" onclick="deleteOrderFromModal()">
+          <i class="fas fa-trash"></i> Xóa đơn hàng
+        </button>
+      </div>
+    </div>
   </div>
 
   <div id="toast"></div>

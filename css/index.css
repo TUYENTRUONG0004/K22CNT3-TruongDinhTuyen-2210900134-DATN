@@ -1,8 +1,8 @@
 body {
     margin: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.8)), 
-                url("../anh/nen.jpg");
+    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.8)),
+                url("../static/anh/backgr.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -11,8 +11,8 @@ body {
 
 /* NAVBAR */
 .navbar-custom {
-    height: 70px;
-    background: linear-gradient(135deg, #ff9ac1, #f8c7d8);
+    height: 120px;
+    background: linear-gradient(135deg, #ff9ac1, #4a90e2);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     position: sticky;
@@ -26,10 +26,8 @@ body {
     margin-left: auto;
 }
 .logo {
-    font-size: 28px;
-    font-weight: 800;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    height: 100px;
+    width: auto;
 }
 
 .nav-right a {
@@ -62,8 +60,21 @@ body {
     text-align: center;
     border-radius: 20px;
     margin-bottom: 50px;
-    box-shadow: 0 10px 30px rgba(255,112,130,0.2);
+    box-shadow: 0 20px 40px rgba(255,112,130,0.3);
     color: #333;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+    opacity: 0.1;
 }
 
 .hero-section h1 {
@@ -87,13 +98,32 @@ body {
     font-size: 1.2rem;
     font-weight: 600;
     border-radius: 50px;
-    box-shadow: 0 6px 15px rgba(255,64,129,0.3);
-    transition: all 0.3s;
+    box-shadow: 0 8px 20px rgba(255,64,129,0.4);
+    transition: all 0.4s ease;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.hero-section .btn:hover::before {
+    left: 100%;
 }
 
 .hero-section .btn:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255,64,129,0.4);
+    box-shadow: 0 10px 25px rgba(255,64,129,0.5);
     background: #e53578;
 }
 
@@ -144,11 +174,12 @@ body {
     background: white;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     height: 100%;
     display: flex;
     flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .product-card:hover {
@@ -214,6 +245,39 @@ body {
     box-shadow: 0 8px 20px rgba(255,64,129,0.3);
 }
 
+/* FOOTER */
+.footer {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 0 20px;
+    margin-top: 60px;
+}
+
+.footer h5 {
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.footer p, .footer a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #fff;
+}
+
+.footer .list-unstyled li {
+    margin-bottom: 8px;
+}
+
+.footer hr {
+    border-color: rgba(255,255,255,0.2);
+    margin: 30px 0;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .hero-section h1 {
@@ -227,5 +291,8 @@ body {
     }
     .search-input, .filter-select {
         width: 100%;
+    }
+    .footer .row > div {
+        margin-bottom: 30px;
     }
 }

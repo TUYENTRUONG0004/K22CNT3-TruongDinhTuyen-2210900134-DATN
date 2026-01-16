@@ -5,9 +5,9 @@
 }
 
 body {
-  font-family: 'Segoe UI', 'Poppins', sans-serif; /* Font hiện đại, vui tươi */
-  background: #fff0f8; /* Soft pink bg */
-  color: #4a4a4a;
+  font-family: 'Segoe UI', 'Poppins', sans-serif; /* Professional font */
+  background: #f5f5f5; /* Light gray bg */
+  color: #333;
 }
 
 .layout {
@@ -17,13 +17,13 @@ body {
 
 .sidebar {
   width: 280px;
-  background: linear-gradient(180deg, #ff9ac1, #ff4081);
+  background: linear-gradient(180deg, #2c3e50, #34495e);
   color: #fff;
   padding: 40px 20px;
   position: fixed;
   height: 100%;
   overflow-y: auto;
-  box-shadow: 8px 0 25px rgba(255, 64, 129, 0.3);
+  box-shadow: 8px 0 25px rgba(0, 0, 0, 0.3);
 }
 
 .brand {
@@ -54,9 +54,9 @@ body {
 }
 
 .nav-item:hover, .nav-item.active {
-  background: rgba(255,255,255,0.3);
+  background: rgba(52, 152, 219, 0.3);
   transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(255,64,129,0.4);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
 }
 
 .nav-item i {
@@ -68,12 +68,12 @@ body {
   flex: 1;
   margin-left: 280px;
   padding: 50px;
-  background: #fff0f8;
+  background: #f5f5f5;
 }
 
 .page-title {
   font-size: 36px;
-  color: #ff4081;
+  color: #2c3e50;
   margin-bottom: 40px;
   text-align: center;
   font-weight: bold;
@@ -90,14 +90,14 @@ body {
   background: #fff;
   padding: 30px;
   border-radius: 30px;
-  box-shadow: 0 10px 30px rgba(255,64,129,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   text-align: center;
   transition: all 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(255,64,129,0.3);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
 .card-label {
@@ -109,14 +109,14 @@ body {
 .card-value {
   font-size: 48px;
   font-weight: bold;
-  color: #ff4081;
+  color: #3498db;
 }
 
 .panel {
   background: #fff;
   padding: 30px;
   border-radius: 30px;
-  box-shadow: 0 10px 30px rgba(255,64,129,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   margin-bottom: 40px;
 }
 
@@ -128,21 +128,21 @@ body {
   display: block;
   margin-bottom: 8px;
   font-size: 16px;
-  color: #ff4081;
+  color: #2c3e50;
 }
 
 .form-row input, .form-row select, .form-row textarea {
   width: 100%;
   padding: 12px;
-  border: 2px solid #ff9ac1;
+  border: 2px solid #bdc3c7;
   border-radius: 15px;
   font-size: 16px;
   transition: all 0.3s ease;
 }
 
 .form-row input:focus, .form-row select:focus, .form-row textarea:focus {
-  border-color: #ff4081;
-  box-shadow: 0 0 15px rgba(255,64,129,0.3);
+  border-color: #3498db;
+  box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
 }
 
 .btn {
@@ -155,13 +155,13 @@ body {
 }
 
 .btn.primary {
-  background: linear-gradient(135deg, #ff9ac1, #ff4081);
+  background: linear-gradient(135deg, #3498db, #2980b9);
   color: #fff;
 }
 
 .btn.primary:hover {
   transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(255,64,129,0.4);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
 }
 
 .btn.danger {
@@ -176,7 +176,7 @@ body {
 }
 
 .table th {
-  background: linear-gradient(135deg, #ff9ac1, #ff4081);
+  background: linear-gradient(135deg, #2c3e50, #34495e);
   color: #fff;
   padding: 15px;
   text-align: left;
@@ -186,7 +186,7 @@ body {
 .table td {
   background: #fff;
   padding: 15px;
-  box-shadow: 0 5px 15px rgba(255,64,129,0.1);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
 .table tr:hover td {
@@ -199,16 +199,23 @@ body {
   margin-top: 10px;
 }
 
+.chart-container-large {
+  position: relative;
+  height: 350px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
 #toast {
   position: fixed;
   bottom: 40px;
   right: 40px;
   min-width: 350px;
   padding: 15px 25px;
-  background: linear-gradient(135deg, #ff9ac1, #ff4081);
+  background: linear-gradient(135deg, #2c3e50, #34495e);
   color: #fff;
   border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(255,64,129,0.4);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
   z-index: 1000;
   opacity: 0;
   transform: translateY(20px);
@@ -261,7 +268,7 @@ body {
   border-radius: 30px;
   width: 500px;
   max-width: 90%;
-  box-shadow: 0 15px 40px rgba(255,64,129,0.4);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
   position: relative;
 }
 
@@ -271,9 +278,9 @@ body {
   right: 20px;
   font-size: 28px;
   cursor: pointer;
-  color: #ff4081;
+  color: #2c3e50;
 }
 
 .close-modal:hover {
-  color: #ff1493;
+  color: #34495e;
 }

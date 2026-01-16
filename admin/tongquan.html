@@ -7,6 +7,7 @@
   <title>Tổng quan – TOYWORLD Admin</title>
   <link rel="stylesheet" href="../admin/css/admin.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -14,14 +15,14 @@
     <aside class="sidebar">
       <div class="brand">TOYWORLD</div>
       <nav class="nav">
-        <a class="nav-item" href="tongquan.html"><i class="fas fa-home"></i> Tổng quan</a>
+        <a class="nav-item active" href="tongquan.html"><i class="fas fa-home"></i> Tổng quan</a>
         <a class="nav-item" href="sanpham.html"><i class="fas fa-cube"></i> Sản phẩm</a>
         <a class="nav-item" href="danhmuc.html"><i class="fas fa-tags"></i> Danh mục</a>
         <a class="nav-item" href="khohang.html"><i class="fas fa-box"></i> Kho hàng</a>
         <a class="nav-item" href="khuyenmai.html"><i class="fas fa-gift"></i> Khuyến mãi</a>
         <a class="nav-item" href="donhang.html"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
         <a class="nav-item" href="nguoidung.html"><i class="fas fa-users"></i> Người dùng</a>
-        <a class="nav-item active" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
+        <a class="nav-item" href="diachigiaohang.html"><i class="fas fa-map-marker-alt"></i> Địa chỉ giao hàng</a>
       </nav>
     </aside>
 
@@ -37,8 +38,57 @@
           <div class="card-value" id="statCategories">--</div>
         </div>
         <div class="card">
-          <div class="card-label">Đơn hàng</div>
+          <div class="card-label">Tổng đơn hàng</div>
           <div class="card-value" id="statOrders">--</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Người dùng</div>
+          <div class="card-value" id="statUsers">--</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Doanh thu</div>
+          <div class="card-value" id="statRevenue">--</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Đơn hoàn thành</div>
+          <div class="card-value" id="statCompleted">--</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Đơn chờ xác nhận</div>
+          <div class="card-value" id="statPending">--</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Sản phẩm sắp hết</div>
+          <div class="card-value" id="statLowStock">--</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Doanh thu tháng này</div>
+          <div class="card-value" id="statMonthlyRevenue">--</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Đơn hàng 7 ngày</div>
+          <div class="card-value" id="statRecentOrders">--</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 style="color: #ff4081; margin-bottom: 20px;">Doanh thu 30 ngày</h2>
+        <div class="chart-container-large">
+          <canvas id="revenueChart"></canvas>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 style="color: #ff4081; margin-bottom: 20px;">Tồn kho 30 ngày</h2>
+        <div class="chart-container-large">
+          <canvas id="inventoryChart"></canvas>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 style="color: #ff4081; margin-bottom: 20px;">Người dùng 30 ngày</h2>
+        <div class="chart-container-large">
+          <canvas id="usersChart"></canvas>
         </div>
       </div>
     </main>

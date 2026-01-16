@@ -1,15 +1,16 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-image: url("../anh/nen.jpg");
+    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.8)),
+                url("../static/anh/backgr.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
 }
 /* NAVBAR */
 .navbar-custom {
-    height: 70px;
-    background-color: #f8c7d8;
+    height: 120px;
+    background: linear-gradient(135deg, #ff9ac1, #4a90e2);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -18,9 +19,8 @@ body {
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
+    height: 100px;
+    width: auto;
 }
 
 /* MENU PHẢI */

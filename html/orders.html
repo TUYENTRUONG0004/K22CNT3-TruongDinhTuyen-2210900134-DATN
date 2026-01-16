@@ -9,16 +9,306 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- CSS chung -->
-    <link href="../css/index.css" rel="stylesheet">
-    <!-- CSS riêng cho orders -->
-    <link href="../css/orders.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar-custom {
+            height: 120px;
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            height: 100px;
+            width: auto;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-right a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-right a:hover, .nav-right a.active {
+            color: #e91e63;
+        }
+
+        .badge-cart {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 0.7rem;
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .page-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* ORDER CARD */
+        .order-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .order-id {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e91e63;
+        }
+
+        .order-date {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        .order-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-processing {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .order-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e91e63;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ORDER ITEMS PREVIEW */
+        .order-items-preview {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .order-items-preview img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #f0f0f0;
+        }
+
+        .item-count-badge {
+            background: #e91e63;
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* BUTTONS */
+        .btn-detail {
+            background: linear-gradient(135deg, #e91e63, #f06292);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-detail:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+            color: white;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            background: white;
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .empty-state i {
+            color: #e91e63;
+            margin-bottom: 2rem;
+        }
+
+        .empty-state h4 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* MODAL */
+        .modal-content {
+            border-radius: 20px;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #e91e63, #f06292);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .detail-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section h5 {
+            color: #e91e63;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #666;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        .order-item-modal {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background: #f8f9fa;
+            margin-bottom: 1rem;
+        }
+
+        .order-item-modal img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 1rem;
+        }
+
+        .order-item-modal-info {
+            flex: 1;
+        }
+
+        .order-item-modal-info h6 {
+            margin: 0;
+            color: #333;
+        }
+
+        .order-item-modal-info small {
+            color: #666;
+        }
+
+        .order-item-modal-price {
+            font-weight: bold;
+            color: #e91e63;
+        }
+    </style>
 </head>
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar-custom d-flex align-items-center px-4 px-lg-5">
-        <div class="logo">TOYWORLD</div>
+    <nav class="navbar-custom">
+        <img src="../static/anh/logo.png" alt="TOYWORLD" class="logo">
         <div class="nav-right">
             <a href="index.html">Trang Chủ</a>
             <a href="shop.html">Shop</a>
@@ -29,52 +319,93 @@
                 <span class="badge bg-danger rounded-pill badge-cart" id="cart-count">0</span>
             </a>
             <a href="orders.html" class="active">
-                <i class="fas fa-history fa-lg" title="Lịch sử đơn hàng"></i>
-            </a>
-            <a href="login.html">
-                <i class="fas fa-user fa-lg"></i>
+                <i class="fas fa-history fa-lg"></i>
             </a>
         </div>
     </nav>
 
-    <div class="main-content container py-5">
-        <h2 class="mb-5 text-center fw-bold">Lịch Sử Đơn Hàng</h2>
+    <div class="main-content container">
+        <h1 class="page-title">
+            <i class="fas fa-clipboard-list me-3"></i>Lịch Sử Đơn Hàng
+        </h1>
 
-        <div id="no-orders" class="text-center py-5 d-none">
-            <i class="fas fa-box-open fa-5x text-muted mb-4"></i>
+        <!-- EMPTY STATE -->
+        <div id="no-orders" class="empty-state" style="display: none;">
+            <i class="fas fa-box-open fa-5x"></i>
             <h4>Chưa có đơn hàng nào</h4>
-            <p>Hãy mua sắm và đặt hàng để xem lịch sử tại đây nhé!</p>
-            <a href="shop.html" class="btn btn-danger btn-lg">Tiếp tục mua sắm</a>
+            <p>Bạn chưa có đơn hàng nào. Hãy khám phá cửa hàng và mua sắm ngay!</p>
+            <a href="shop.html" class="btn btn-detail btn-lg">
+                <i class="fas fa-shopping-bag me-2"></i>Bắt đầu mua sắm
+            </a>
         </div>
 
-        <div class="row" id="orders-list">
+        <!-- ORDERS LIST -->
+        <div id="orders-list" class="row">
             <!-- Đơn hàng sẽ được load bằng JS -->
         </div>
     </div>
 
     <!-- MODAL CHI TIẾT ĐƠN HÀNG -->
     <div class="modal fade" id="orderDetailModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Chi Tiết Đơn Hàng #<span id="modal-order-id"></span></h5>
+                    <h5 class="modal-title">
+                        <i class="fas fa-receipt me-2"></i>Chi Tiết Đơn Hàng #<span id="modal-order-id"></span>
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Ngày đặt:</strong> <span id="modal-date"></span></p>
-                    <p><strong>Trạng thái:</strong> <span class="badge bg-warning" id="modal-status">Đang xử lý</span></p>
-                    <p><strong>Tổng tiền:</strong> <span class="text-danger fw-bold" id="modal-total"></span></p>
+                    <!-- THÔNG TIN ĐƠN HÀNG -->
+                    <div class="detail-section">
+                        <h5><i class="fas fa-info-circle me-2"></i>Thông Tin Đơn Hàng</h5>
+                        <div class="info-row">
+                            <span class="info-label">Mã đơn hàng:</span>
+                            <span class="info-value" id="modal-order-code"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Ngày đặt:</span>
+                            <span class="info-value" id="modal-date"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Trạng thái:</span>
+                            <span id="modal-status"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Tổng tiền:</span>
+                            <span class="info-value text-danger fw-bold" id="modal-total"></span>
+                        </div>
+                    </div>
 
-                    <h5 class="mt-4">Thông tin giao hàng</h5>
-                    <p id="modal-customer"></p>
+                    <!-- THÔNG TIN GIAO HÀNG -->
+                    <div class="detail-section">
+                        <h5><i class="fas fa-shipping-fast me-2"></i>Thông Tin Giao Hàng</h5>
+                        <div id="modal-customer"></div>
+                    </div>
 
-                    <h5 class="mt-4">Sản phẩm</h5>
-                    <div id="modal-items"></div>
+                    <!-- SẢN PHẨM -->
+                    <div class="detail-section">
+                        <h5><i class="fas fa-box me-2"></i>Sản Phẩm</h5>
+                        <div id="modal-items"></div>
+                    </div>
 
-                    <h5 class="mt-4">Phương thức thanh toán</h5>
-                    <p id="modal-payment"></p>
+                    <!-- THANH TOÁN -->
+                    <div class="detail-section">
+                        <h5><i class="fas fa-credit-card me-2"></i>Phương Thức Thanh Toán</h5>
+                        <p id="modal-payment" class="info-value mb-0"></p>
+                    </div>
 
-                    <p class="mt-3" id="modal-note"></p>
+                    <!-- GHI CHÚ -->
+                    <div class="detail-section" id="modal-note-section" style="display: none;">
+                        <h5><i class="fas fa-comment me-2"></i>Ghi Chú</h5>
+                        <p id="modal-note" class="info-value mb-0"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <a href="shop.html" class="btn btn-detail">
+                        <i class="fas fa-shopping-bag me-2"></i>Tiếp tục mua sắm
+                    </a>
                 </div>
             </div>
         </div>
@@ -82,7 +413,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- JS riêng -->
+    <!-- Custom JS -->
     <script src="../js/orders.js"></script>
 </body>
 </html>

@@ -1,101 +1,71 @@
-// categories.js - Quản lý Danh mục (tách riêng, hoàn chỉnh)
-
 const API_BASE = 'http://127.0.0.1:5000/api';
 let categories = [];
 
-// Load danh mục khi vào view
+// Load danh mục
 async function loadCategories() {
     try {
         const res = await fetch(`${API_BASE}/danhmuc`);
-        if (!res.ok) {
-            throw new Error(`HTTP ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         categories = await res.json();
         renderCategoryTable();
     } catch (err) {
-        showToast('Không thể tải danh mục. Kiểm tra server Flask đang chạy?', 'error');
-        console.error('Lỗi load danh mục:', err);
-        const table = document.getElementById('categoryTable');
-        if (table) {
-            table.innerHTML = `<tr><td colspan="3" class="text-center text-danger py-4">Lỗi kết nối server</td></tr>`;
-        }
+        showToast('Lỗi tải danh mục. Kiểm tra server Flask!', 'error');
+        console.error(err);
     }
 }
 
-// Render bảng danh mục
+// Render bảng
 function renderCategoryTable() {
     const table = document.getElementById('categoryTable');
-    if (!table) {
-        console.error('Không tìm thấy bảng categoryTable');
-        return;
-    }
-
     if (categories.length === 0) {
         table.innerHTML = `<tr><td colspan="3" class="text-center text-muted py-4">Chưa có danh mục</td></tr>`;
         return;
     }
 
-    table.innerHTML = `
-        <tr>
-            <th>ID</th>
-            <th>Tên danh mục</th>
-            <th>Hành động</th>
-        </tr>
-    `;
-
+    let html = `<tr><th>ID</th><th>Tên danh mục</th><th>Hành động</th></tr>`;
     categories.forEach(cat => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><strong>${cat.MaDanhMuc}</strong></td>
-            <td>${escapeHtml(cat.TenDanhMuc)}</td>
-            <td>
-                <button class="btn ghost small" onclick="editCategory(${cat.MaDanhMuc}, '${escapeHtml(cat.TenDanhMuc)}')">
-                    <i class="fas fa-edit"></i> Sửa
-                </button>
-                <button class="btn danger small" onclick="deleteCategory(${cat.MaDanhMuc})">
-                    <i class="fas fa-trash"></i> Xóa
-                </button>
-            </td>
+        html += `
+            <tr>
+                <td>${cat.MaDanhMuc}</td>
+                <td>${escapeHtml(cat.TenDanhMuc)}</td>
+                <td>
+                    <button class="btn ghost small" onclick="editCategory(${cat.MaDanhMuc}, '${escapeHtml(cat.TenDanhMuc)}')">Sửa</button>
+                    <button class="btn danger small" onclick="deleteCategory(${cat.MaDanhMuc})">Xóa</button>
+                </td>
+            </tr>
         `;
-        table.appendChild(tr);
     });
+    table.innerHTML = html;
 }
 
-// An toàn HTML
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Chuẩn bị sửa
+// Edit
 function editCategory(id, name) {
     document.getElementById('editCategoryId').value = id;
     document.getElementById('categoryName').value = name;
     document.getElementById('categorySubmitBtn').textContent = 'Cập nhật danh mục';
-    showToast(`Đang sửa: ${name}`);
 }
 
-// Xóa danh mục
+// Delete
 async function deleteCategory(id) {
-    if (!confirm('Xóa danh mục này?\nCảnh báo: Các sản phẩm thuộc danh mục sẽ bị ảnh hưởng!')) {
-        return;
-    }
+    if (!confirm('Xóa danh mục này? Các sản phẩm liên quan sẽ bị ảnh hưởng!')) return;
 
     try {
-        const res = await fetch(`${API_BASE}/danhmuc/${id}`, {
-            method: 'DELETE'
-        });
-        if (!res.ok) throw new Error('Xóa thất bại');
-        const data = await res.json();
-        showToast(data.message || 'Xóa thành công!');
-        loadCategories();
+        const res = await fetch(`${API_BASE}/danhmuc/${id}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error((await res.json()).error || 'Xóa thất bại');
+        showToast('Xóa danh mục thành công!');
+        location.reload();
     } catch (err) {
-        showToast('Lỗi xóa danh mục', 'error');
+        showToast('Lỗi xóa: ' + err.message, 'error');
     }
 }
 
-// Submit form thêm/sửa
+// Submit form
 document.getElementById('categoryForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -118,23 +88,15 @@ document.getElementById('categoryForm')?.addEventListener('submit', async (e) =>
         });
 
         if (!res.ok) {
-            const errData = await res.json();
-            throw new Error(errData.error || 'Thao tác thất bại');
+            const err = await res.json();
+            throw new Error(err.error || 'Thao tác thất bại');
         }
 
-        const data = await res.json();
-        showToast(data.message || (id ? 'Cập nhật thành công!' : 'Thêm danh mục thành công!'));
-
-        // Reset form
-        document.getElementById('categoryForm').reset();
-        document.getElementById('editCategoryId').value = '';
-        document.getElementById('categorySubmitBtn').textContent = 'Thêm danh mục';
-
-        loadCategories(); // Reload bảng
+        showToast(id ? 'Cập nhật thành công!' : 'Thêm danh mục thành công!');
+        location.reload();
     } catch (err) {
-        showToast(err.message || 'Lỗi kết nối server', 'error');
+        showToast('Lỗi: ' + err.message, 'error');
     }
 });
 
-// Load khi trang sẵn sàng
 document.addEventListener('DOMContentLoaded', loadCategories);

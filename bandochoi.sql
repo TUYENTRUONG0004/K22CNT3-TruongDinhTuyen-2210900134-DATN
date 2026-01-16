@@ -1,13 +1,13 @@
 ﻿create database bandochoi
 use bandochoi
 CREATE TABLE NguoiDung (
-    MaNguoiDung INT IDENTITY(1,1) PRIMARY KEY,
-    TenNguoiDung NVARCHAR(50) NOT NULL,
+    MaNguoiDung INT IDENTITY PRIMARY KEY,
+    TenNguoiDung NVARCHAR(100) NOT NULL,
     Email NVARCHAR(100) NOT NULL UNIQUE,
     MatKhauHash NVARCHAR(255) NOT NULL,
-    VaiTro NVARCHAR(20) NOT NULL DEFAULT N'User',
-    SoDienThoai NVARCHAR(20) NULL,
-    NgayTao DATETIME NOT NULL DEFAULT GETDATE()
+    VaiTro NVARCHAR(20) NOT NULL DEFAULT N'User', -- User / Admin
+    SoDienThoai NVARCHAR(20),
+    NgayTao DATETIME DEFAULT GETDATE()
 );
 
 -- 2) DanhMuc
@@ -18,16 +18,15 @@ CREATE TABLE DanhMuc (
 
 -- 3) DoChoi
 CREATE TABLE DoChoi (
-    MaDoChoi INT IDENTITY(1,1) PRIMARY KEY,
-    TenDoChoi NVARCHAR(100) NOT NULL,
-    Gia INT NOT NULL,
-    MoTa NVARCHAR(500) NULL,
+    MaDoChoi INT IDENTITY PRIMARY KEY,
+    TenDoChoi NVARCHAR(150) NOT NULL,
+    Gia INT NOT NULL CHECK (Gia >= 0),
+    MoTa NVARCHAR(500),
     MaNguoiBan INT NOT NULL,
     MaDanhMuc INT NOT NULL,
-    AnhURL NVARCHAR(300) NULL,
-    TrangThai NVARCHAR(20) NOT NULL DEFAULT N'Active',
-    NgayDang DATETIME NOT NULL DEFAULT GETDATE(),
-    CONSTRAINT CK_DoChoi_Gia CHECK (Gia >= 0),
+    AnhURL NVARCHAR(300),
+    TrangThai NVARCHAR(20) DEFAULT N'Active',
+    NgayDang DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (MaNguoiBan) REFERENCES NguoiDung(MaNguoiDung),
     FOREIGN KEY (MaDanhMuc) REFERENCES DanhMuc(MaDanhMuc)
 );
@@ -43,36 +42,38 @@ CREATE TABLE KhoHang (
 
 -- 5) GioHang
 CREATE TABLE GioHang (
-    MaGioHang INT IDENTITY(1,1) PRIMARY KEY,
+    MaGioHang INT IDENTITY PRIMARY KEY,
     MaNguoiDung INT NOT NULL,
-    TrangThai NVARCHAR(30) NOT NULL DEFAULT N'Active',
-    NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
+    TrangThai NVARCHAR(20) DEFAULT N'Active',
+    NgayTao DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
--- 1 user chỉ có 1 giỏ "Active"
-CREATE UNIQUE INDEX UX_GioHang_Active ON GioHang(MaNguoiDung) WHERE TrangThai = N'Active';
+
+CREATE UNIQUE INDEX UX_GioHang_Active
+ON GioHang(MaNguoiDung)
+WHERE TrangThai = N'Active';
 
 -- 6) GioHangChiTiet
 CREATE TABLE GioHangChiTiet (
-    MaGioHangCT INT IDENTITY(1,1) PRIMARY KEY,
+    MaGioHangCT INT IDENTITY PRIMARY KEY,
     MaGioHang INT NOT NULL,
     MaDoChoi INT NOT NULL,
-    SoLuong INT NOT NULL,
-    CONSTRAINT CK_GHCT_SoLuong CHECK (SoLuong > 0),
+    SoLuong INT NOT NULL CHECK (SoLuong > 0),
     FOREIGN KEY (MaGioHang) REFERENCES GioHang(MaGioHang),
-    FOREIGN KEY (MaDoChoi) REFERENCES DoChoi(MaDoChoi)
+    FOREIGN KEY (MaDoChoi) REFERENCES DoChoi(MaDoChoi),
+    CONSTRAINT UQ_GHCT UNIQUE (MaGioHang, MaDoChoi)
 );
 -- Không cho 1 sản phẩm xuất hiện nhiều dòng trong cùng giỏ
 CREATE UNIQUE INDEX UX_GHCT ON GioHangChiTiet(MaGioHang, MaDoChoi);
 
 -- 7) DiaChiGiaoHang
 CREATE TABLE DiaChiGiaoHang (
-    MaDiaChi INT IDENTITY(1,1) PRIMARY KEY,
+    MaDiaChi INT IDENTITY PRIMARY KEY,
     MaNguoiDung INT NOT NULL,
-    TenNguoiNhan NVARCHAR(100) NULL,
-    SoDienThoai NVARCHAR(20) NULL,
+    TenNguoiNhan NVARCHAR(100),
+    SoDienThoai NVARCHAR(20),
     DiaChi NVARCHAR(200) NOT NULL,
-    MacDinh BIT NOT NULL DEFAULT 0,
+    MacDinh BIT DEFAULT 0,
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
 -- 1 user chỉ có 1 địa chỉ mặc định
@@ -80,29 +81,32 @@ CREATE UNIQUE INDEX UX_DiaChi_MacDinh ON DiaChiGiaoHang(MaNguoiDung) WHERE MacDi
 
 -- 8) DonHang
 CREATE TABLE DonHang (
-    MaDonHang INT IDENTITY(1,1) PRIMARY KEY,
-    MaNguoiMua INT NOT NULL,
+    MaDonHang INT IDENTITY PRIMARY KEY,
+    MaNguoiMua INT NULL,                
     MaDiaChi INT NULL,
-    TrangThai NVARCHAR(50) NOT NULL DEFAULT N'Cho xac nhan',
-    TongTien INT NOT NULL DEFAULT 0,
-    NgayDat DATETIME NOT NULL DEFAULT GETDATE(),
-    CONSTRAINT CK_DonHang_TongTien CHECK (TongTien >= 0),
+    TenKhachHang NVARCHAR(100),        
+    SoDienThoai NVARCHAR(20),
+    DiaChiGiao NVARCHAR(250),
+    GhiChu NVARCHAR(500),
+    TrangThai NVARCHAR(50) DEFAULT N'Cho xac nhan',
+    TongTien INT NOT NULL CHECK (TongTien >= 0),
+    NgayDat DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (MaNguoiMua) REFERENCES NguoiDung(MaNguoiDung),
     FOREIGN KEY (MaDiaChi) REFERENCES DiaChiGiaoHang(MaDiaChi)
 );
 
 -- 9) ChiTietDonHang
+/* ================== CHITIETDONHANG ================== */
 CREATE TABLE ChiTietDonHang (
-    MaCTDH INT IDENTITY(1,1) PRIMARY KEY,
+    MaCTDH INT IDENTITY PRIMARY KEY,
     MaDonHang INT NOT NULL,
     MaDoChoi INT NOT NULL,
-    SoLuong INT NOT NULL,
-    DonGia INT NOT NULL,
+    SoLuong INT NOT NULL CHECK (SoLuong > 0),
+    DonGia INT NOT NULL CHECK (DonGia >= 0),
     ThanhTien AS (SoLuong * DonGia) PERSISTED,
-    CONSTRAINT CK_CTDH_SoLuong CHECK (SoLuong > 0),
-    CONSTRAINT CK_CTDH_DonGia CHECK (DonGia >= 0),
     FOREIGN KEY (MaDonHang) REFERENCES DonHang(MaDonHang),
-    FOREIGN KEY (MaDoChoi) REFERENCES DoChoi(MaDoChoi)
+    FOREIGN KEY (MaDoChoi) REFERENCES DoChoi(MaDoChoi),
+    CONSTRAINT UQ_CTDH UNIQUE (MaDonHang, MaDoChoi)
 );
 -- Tăng tốc + chống trùng sản phẩm trong 1 đơn
 CREATE INDEX IX_CTDH_MaDonHang ON ChiTietDonHang(MaDonHang);
@@ -147,6 +151,7 @@ CREATE TABLE ThanhToan (
     FOREIGN KEY (MaDonHang) REFERENCES DonHang(MaDonHang)
 );
 
+
 -- 13) VanChuyen
 CREATE TABLE VanChuyen (
     MaVanChuyen INT IDENTITY(1,1) PRIMARY KEY,
@@ -171,6 +176,32 @@ CREATE TABLE ThongBao (
     NgayTao DATETIME NOT NULL DEFAULT GETDATE(),
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
+
+/* ================== YEU THICH ================== */
+CREATE TABLE YeuThich (
+    MaNguoiDung INT,
+    MaDoChoi INT,
+    NgayThem DATETIME DEFAULT GETDATE(),
+    PRIMARY KEY (MaNguoiDung, MaDoChoi),
+    FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung),
+    FOREIGN KEY (MaDoChoi) REFERENCES DoChoi(MaDoChoi)
+);
+
+/* ================== NOI DUNG HUONG DAN ================== */
+CREATE TABLE NoiDungHuongDan (
+    MaNoiDung INT IDENTITY PRIMARY KEY,
+    MaDoChoi INT NOT NULL,
+    TieuDe NVARCHAR(200),
+    Loai NVARCHAR(50),
+    LinkURL NVARCHAR(500),
+    NoiDung NVARCHAR(MAX),
+    NgayTao DATETIME DEFAULT GETDATE(),
+    TrangThai NVARCHAR(20) DEFAULT N'Active',
+    FOREIGN KEY (MaDoChoi) REFERENCES DoChoi(MaDoChoi)
+);
+
+
+
 
 -- ===== Index FK hay dùng để query nhanh =====
 CREATE INDEX IX_DoChoi_MaDanhMuc ON DoChoi(MaDanhMuc);
@@ -338,6 +369,7 @@ BEGIN TRY
     (@DH2, N'VNPost',N'VD002', 25000, N'Dang xu ly', '2025-12-25'),
     (@DH3, N'J&T',   N'VD003', 30000, N'Dang giao',  '2025-12-23');
 
+
     /* =========================
        11) THONGBAO
     ========================= */
@@ -369,7 +401,8 @@ SELECT * FROM DonHang_KhuyenMai;
 SELECT * FROM ThanhToan;
 SELECT * FROM VanChuyen;
 SELECT * FROM ThongBao;
-
+SELECT * FROM YeuThich;
+SELECT * FROM NoiDungHuongDan;
 -- Chi tiết đơn có ảnh (JOIN DoChoi)
 SELECT dh.MaDonHang, dh.NgayDat, dh.TrangThai, dh.TongTien,
        ct.MaDoChoi, dc.TenDoChoi, dc.AnhURL, ct.SoLuong, ct.DonGia, ct.ThanhTien
